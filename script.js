@@ -39,12 +39,14 @@ let currentRotation = 0;
 let spinning = false;
 
 function fitCanvas() {
-  const rect = wheel.getBoundingClientRect();
+  const rect = canvas.getBoundingClientRect();
+  const size = Math.floor(Math.min(rect.width, rect.height));
+  if (size <= 0) return;
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  canvas.width = Math.round(rect.width * dpr);
-  canvas.height = Math.round(rect.height * dpr);
+  canvas.width = Math.round(size * dpr);
+  canvas.height = Math.round(size * dpr);
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  drawWheel(rect.width);
+  drawWheel(size);
 }
 
 function drawWheel(size = wheel.clientWidth) {
@@ -224,7 +226,16 @@ popupClose.addEventListener("click", hideWinnerPopup);
 winnerOverlay.addEventListener("click", (event) => { if (event.target === winnerOverlay) hideWinnerPopup(); });
 spinAgain.addEventListener("click", () => { hideWinnerPopup(); gsap.delayedCall(0.22, spin); });
 document.addEventListener("keydown", (event) => { if (event.key === "Escape" && winnerOverlay.classList.contains("is-visible")) hideWinnerPopup(); });
-window.addEventListener("resize", fitCanvas);
+let resizeFrame;
+function scheduleCanvasFit() {
+  cancelAnimationFrame(resizeFrame);
+  resizeFrame = requestAnimationFrame(fitCanvas);
+}
+
+window.addEventListener("resize", scheduleCanvasFit);
+if ("ResizeObserver" in window) {
+  new ResizeObserver(scheduleCanvasFit).observe(wheel);
+}
 document.fonts.ready.then(renderMenus);
 
 gsap.from(".intro > *", { y: 18, opacity: 0, duration: 0.7, stagger: 0.08, ease: "power2.out" });
