@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f4ec" />
+    <title>오늘 뭐 먹지? | 점심 메뉴 룰렛</title>
+    <meta
+      name="description"
+      content="메뉴를 고르고 룰렛을 돌려 오늘의 점심을 가볍게 결정하세요."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="오늘 뭐 먹지 홈">
+          <span class="brand-mark" aria-hidden="true">✦</span>
+          <span>오늘 뭐 먹지?</span>
+        </a>
+        <p>점심 고민은 룰렛에게 맡겨요</p>
+      </header>
+
+      <section class="hero" aria-labelledby="page-title">
+        <div class="intro">
+          <span class="eyebrow">LUNCH PICKER</span>
+          <h1 id="page-title">고민은 짧게,<br /><em>점심은 맛있게!</em></h1>
+          <p class="lead">
+            먹고 싶은 메뉴를 골라 담고 룰렛을 돌려보세요.<br />
+            오늘의 한 끼를 기분 좋게 정해드릴게요.
+          </p>
+
+          <div class="menu-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="step">01</span>
+                <h2>룰렛에 넣을 메뉴</h2>
+              </div>
+              <span class="count" id="menu-count">6개 선택</span>
+            </div>
+
+            <form id="add-form" class="add-form">
+              <label class="sr-only" for="menu-input">새 메뉴 이름</label>
+              <input
+                id="menu-input"
+                type="text"
+                maxlength="12"
+                autocomplete="off"
+                placeholder="메뉴를 직접 추가해보세요"
+              />
+              <button type="submit" aria-label="메뉴 추가">추가 <span>＋</span></button>
+            </form>
+
+            <ul id="menu-list" class="menu-list" aria-label="선택한 메뉴 목록"></ul>
+            <p class="hint">메뉴는 2개 이상, 최대 10개까지 추가할 수 있어요.</p>
+          </div>
+        </div>
+
+        <div class="roulette-area">
+          <div class="roulette-heading">
+            <span class="step">02</span>
+            <div>
+              <h2>오늘의 메뉴를 돌려봐요</h2>
+              <p>가운데 버튼을 눌러주세요!</p>
+            </div>
+          </div>
+
+          <div class="wheel-stage">
+            <div class="pointer" aria-hidden="true"><span></span></div>
+            <div class="wheel-shadow" aria-hidden="true"></div>
+            <div id="wheel" class="wheel" role="img" aria-label="점심 메뉴 룰렛">
+              <canvas id="wheel-canvas"></canvas>
+            </div>
+            <button id="spin-button" class="spin-button" type="button">
+              <span>돌리기</span>
+              <small>GO!</small>
+            </button>
+          </div>
+
+          <div id="result-card" class="result-card" aria-live="polite">
+            <span class="result-kicker">TODAY'S LUNCH</span>
+            <strong id="result-text">룰렛을 돌려보세요!</strong>
+            <span id="result-sub">오늘의 메뉴가 여기 나타나요</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="grain" aria-hidden="true"></div>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
